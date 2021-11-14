@@ -4,7 +4,7 @@
       <div class="header">
         <div class="header-left">
           <a href="../../documents/html_mock/registerAdmin.html">
-            <img class="logo" src="img/header_logo.png"
+            <img class="logo" src="/img/header_logo.png"
           /></a>
         </div>
 
