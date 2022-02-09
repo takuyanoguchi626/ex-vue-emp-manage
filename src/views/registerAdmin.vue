@@ -91,9 +91,43 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import axios from "axios";
 @Component
-export default class XXXComponent extends Vue {
-  private errorMessage = "エラーメッセージ";
+export default class RegisterAdmin extends Vue {
+  //エラーメッセージ
+  private errorMessage = "";
+  //姓
+  private lastName = "";
+  //名
+  private firstName = "";
+  //メールアドレス
+  private mailAddress = "";
+  //パスワード
+  private password = "";
+
+  /**
+   * 管理者情報をWebAPIに送信し、登録するメソッド.
+   *
+   * @remarks
+   * 管理者情報の入力方法が正しいかどうかを判断するWebAPIに、
+   * 入力した内容を送信し、正しければ登録、間違っていればエラーを表示する。
+   */
+  async registerAdmin(): Promise<void> {
+    const response = await axios.post(
+      "http://153.127.48.168.8080/ex-emp-api/insert",
+      {
+        name: this.lastName + "" + this.firstName,
+        mailAddress: this.mailAddress,
+        password: this.password,
+      }
+    );
+    const status = response.data.status;
+    if (status === "success") {
+      this.$router.push("/loginAdmin");
+    } else {
+      this.errorMessage = response.data.message;
+    }
+  }
 }
 </script>
 
