@@ -22,7 +22,7 @@ export default new Vuex.Store({
      */
     async getEmployeeList(context) {
       const response = await axios.get(
-        "http://153.127.48.168:8080/ex-emp-api-employee/employees"
+        "http://153.127.48.168:8080/ex-emp-api/employee/employees"
       );
       const payload = response.data;
       context.commit("showEmployeeList", payload);

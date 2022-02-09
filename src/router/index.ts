@@ -22,12 +22,12 @@ const routes: Array<RouteConfig> = [
   {
     path: "/loginAdmin",
     name: "",
-    component: () => import("../views/loginAdmin.vue"),
+    component: () => import("../views/LoginAdmin.vue"),
   },
   {
-    path: "/employeeList",
+    path: "/EmployeeList",
     name: "",
-    component: () => import("../views/employeeList.vue"),
+    component: () => import("../views/EmployeeList.vue"),
   },
 ];
 

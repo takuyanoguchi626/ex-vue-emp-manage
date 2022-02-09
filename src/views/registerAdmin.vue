@@ -1,23 +1,9 @@
 <template>
   <div>
-    <!-- <div class="container">
-      <div class="header">
-        <div class="header-left">
-          <a href="login.html">
-            <img class="logo" src="img/header_logo.png" />
-          </a>
-        </div>
-
-        <div class="header-right">
-          <a href="registerAdmin.html">管理者登録</a>
-        </div>
-      </div>
-    </div> -->
-
     <div class="container">
       <div class="row register-page">
         <div class="error">{{ errorMessage }}</div>
-        <form class="col s12" id="reg-form" action="">
+        <form class="col s12" id="reg-form">
           <div class="row">
             <div class="input-field col s6">
               <input
@@ -80,12 +66,6 @@
         </form>
       </div>
     </div>
-
-    <div class="container">
-      <div class="footer">
-        <div class="footer-center">©️ xxx Inc.</div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -109,7 +89,7 @@ export default class RegisterAdmin extends Vue {
    * 管理者情報をWebAPIに送信し、登録するメソッド.
    *
    * @remarks
-   * 管理者情報の入力方法が正しいかどうかを判断するWebAPIに、
+   * 管理者情報を登録するWebAPIに、
    * 入力した内容を送信し、正しければ登録、間違っていればエラーを表示する。
    */
   async registerAdmin(): Promise<void> {
