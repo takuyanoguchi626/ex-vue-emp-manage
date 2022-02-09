@@ -79,4 +79,8 @@ export default class XXXComponent extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.login-page {
+  width: 600px;
+}
+</style>
