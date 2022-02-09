@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <!-- <div class="container">
       <div class="header">
         <div class="header-left">
           <a href="login.html">
@@ -9,11 +9,10 @@
         </div>
 
         <div class="header-right">
-          <router-link to="/registerAdmin">管理者登録</router-link>
-          <router-view />
+          <a href="registerAdmin.html">管理者登録</a>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="container">
       <div class="row register-page">
@@ -115,7 +114,7 @@ export default class RegisterAdmin extends Vue {
    */
   async registerAdmin(): Promise<void> {
     const response = await axios.post(
-      "http://153.127.48.168.8080/ex-emp-api/insert",
+      "http://153.127.48.168:8080/ex-emp-api/insert",
       {
         name: this.lastName + "" + this.firstName,
         mailAddress: this.mailAddress,
