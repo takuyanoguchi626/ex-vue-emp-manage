@@ -54,11 +54,28 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import axios from "axios";
 @Component
 export default class XXXComponent extends Vue {
   private errorMessage = "";
   private mailAddress = "";
   private password = "";
+
+  async loginAdmin(): Promise<void> {
+    const response = await axios.post(
+      "http://153.127.48.168:8080/ex-emp-api/login",
+      {
+        mailAddress: this.mailAddress,
+        password: this.password,
+      }
+    );
+    const status = response.data.status;
+    if (status === "success") {
+      this.$router.push("/employeeList");
+    } else {
+      this.errorMessage = response.data.message;
+    }
+  }
 }
 </script>
 
