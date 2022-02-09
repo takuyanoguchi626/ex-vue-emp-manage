@@ -1,6 +1,8 @@
 <template>
   <div>
     aaa
+    <router-link to="/registerAdmin">管理者登録</router-link>
+    <router-view />
   </div>
 </template>
 

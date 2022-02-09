@@ -9,7 +9,8 @@
         </div>
 
         <div class="header-right">
-          <a href="registerAdmin.html">管理者登録</a>
+          <router-link to="/registerAdmin">管理者登録</router-link>
+          <router-view />
         </div>
       </div>
     </div>
@@ -131,4 +132,8 @@ export default class RegisterAdmin extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.register-page {
+  width: 600px;
+}
+</style>
