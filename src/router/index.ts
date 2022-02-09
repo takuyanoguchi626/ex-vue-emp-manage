@@ -24,6 +24,11 @@ const routes: Array<RouteConfig> = [
     name: "",
     component: () => import("../views/loginAdmin.vue"),
   },
+  {
+    path: "/employeeList",
+    name: "",
+    component: () => import("../views/employeeList.vue"),
+  },
 ];
 
 const router = new VueRouter({

@@ -57,10 +57,20 @@ import { Component, Vue } from "vue-property-decorator";
 import axios from "axios";
 @Component
 export default class XXXComponent extends Vue {
+  //エラーメッセージ
   private errorMessage = "";
+  //メールアドレス
   private mailAddress = "";
+  //パスワード
   private password = "";
 
+  /**
+   * 登録情報をWebAPIに送信し、ログインするメソッド.
+   *
+   * @remarks
+   * 入力した内容が登録されているかどうかを判断するWebAPIに、
+   * 入力した内容を送信し、登録されていればログイン、間違っていればエラーを表示する。
+   */
   async loginAdmin(): Promise<void> {
     const response = await axios.post(
       "http://153.127.48.168:8080/ex-emp-api/login",
