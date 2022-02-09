@@ -2,8 +2,6 @@
   <div id="app">
     <Header />
     <div class="top-wrapper">
-      <router-link to="/aaa">aaa</router-link>|
-      <router-link to="/RegisterAdmin">RegisterAdmin</router-link>|
       <router-view />
     </div>
 

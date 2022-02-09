@@ -1,56 +1,139 @@
 <template>
   <div>
     <div class="container">
-      <div>従業員数:{{ employeeCount }}</div>
       <div class="row">
-        <table class="striped">
-          <thead>
-            <tr>
-              <th>名前</th>
-              <th>入社日</th>
-              <th>扶養人数</th>
-            </tr>
-          </thead>
+        <form>
+          <fieldset>
+            <legend>従業員情報</legend>
+            <table>
+              <tr>
+                <th nowrap>従業員名</th>
+                <td>
+                  <span>{{ currentEmployee.name }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>写真</th>
+                <td>
+                  <img
+                    :src="
+                      'http://153.127.48.168:8080/ex-emp-api/img/' +
+                        this.currentEmployee.image
+                    "
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>性別</th>
+                <td>
+                  <span>{{ currentEmployee.gender }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>入社日</th>
+                <td>
+                  <span>{{ currentEmployee.hireDate }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>メールアドレス</th>
+                <td>
+                  <span>{{ currentEmployee.mailAddress }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>郵便番号</th>
+                <td>
+                  <span>{{ currentEmployee.zipCode }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>住所</th>
+                <td>
+                  <span>{{ currentEmployee.address }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>電話番号</th>
+                <td>
+                  <span>{{ currentEmployee.telephone }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>給料</th>
+                <td>
+                  <span>{{ currentEmployee.salary }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>特性</th>
+                <td>
+                  <span>{{ currentEmployee.characteristics }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>扶養人数</th>
+                <td>
+                  <div class="input-field col s12">
+                    <div class="error">{{ errorMessage }}</div>
+                    <input
+                      id="dependentsCount"
+                      type="text"
+                      class="validate"
+                      :value="currentDependentsCount"
+                      required
+                    />
+                    <label for="dependentsCount2">扶養人数</label>
+                  </div>
+                </td>
+              </tr>
+            </table>
 
-          <tbody>
-            <tr v-for="employee of employees" :key="employee.id">
-              <td>
-                <router-link to="'/employeeDetail/'+employee.id">
-                  {{ employee.name }}</router-link
-                >
-              </td>
-              <td>{{ employee.hireDate }}</td>
-              <td>{{ employee.dependentsCount }}</td>
-            </tr>
-          </tbody>
-        </table>
+            <button
+              class="btn btn-register waves-effect waves-light"
+              type="button"
+            >
+              更新
+            </button>
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Employee } from "@/types/employee";
 import { Component, Vue } from "vue-property-decorator";
+import axios from "axios";
+import { Employee } from "@/types/employee";
 @Component
 export default class XXXComponent extends Vue {
-  /**
-   * Vuexストアのアクション経由で非同期でWebAPIから従業員一覧を取得する.
-   */
+  private currentEmployee = new Employee(
+    0,
+    "",
+    "",
+    "",
+    new Date(),
+    "",
+    "",
+    "",
+    "",
+    0,
+    "",
+    0
+  );
+  private currentEmployeeImage = "";
+  private currentDependentsCount = 0;
+  private errorMessage = "";
+
   created(): void {
-    this.$store.dispatch("getEmployeeList");
-  }
-  /**
-   * 非同期で取得したVuexストア内の従業員数を取得し返す.
-   */
-  get employeeCount(): number {
-    return this.$store.getters.getEmployeeCount;
-  }
-  /**
-   * 非同期で取得したVuexストア内の従業員一覧を取得し返す.
-   */
-  get employees(): Array<Employee> {
-    return this.$store.getters.getEmployees;
+    const employeeId = Number(this.$route.params.id);
+
+    this.currentEmployee = this.$store.getters.getEmployeeById(employeeId);
+
+    this.currentDependentsCount = this.$store.getters.getEmployeeById(
+      employeeId
+    ).dependentsCount;
   }
 }
 </script>

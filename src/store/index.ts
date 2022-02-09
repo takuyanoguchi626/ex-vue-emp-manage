@@ -89,10 +89,12 @@ export default new Vuex.Store({
     getEmployeeById(state) {
       return function(id: number) {
         for (const employee of state.employees) {
-          if (employee.id === id) {
-            return employee;
-          } else {
-            throw new Error("そのIDは存在しません");
+          try {
+            if (employee.id === id) {
+              return employee;
+            }
+          } catch (error) {
+            console.log("そのIDは存在しません");
           }
         }
       };
