@@ -16,9 +16,9 @@ export default new Vuex.Store({
 
   actions: {
     /**
-     *WebAPIから従業員情報オブジェクトを取得しmutationsに渡します.
+     *WebAPIから従業員情報一覧を取得しmutationsに渡します.
      *
-     * @param context Vuex.Store全体
+     * @param context - Vuex.Store全体
      */
     async getEmployeeList(context) {
       const response = await axios.get(
@@ -31,10 +31,10 @@ export default new Vuex.Store({
 
   mutations: {
     /**
-     * WebAPIから受け取った従業員情報をstateのemployeesに入れます.
+     * WebAPIから受け取った従業員情報一覧をstateのemployeesに入れます.
      *
-     * @param state -
-     * @param payload actionsから渡された従業員情報オブジェクト
+     * @param state - ステート
+     * @param payload - actionsから渡された従業員情報一覧
      */
     showEmployeeList(state, payload) {
       state.employees = new Array<Employee>();
@@ -61,10 +61,22 @@ export default new Vuex.Store({
   }, // end mutations
 
   getters: {
+    /**
+     * 従業員数を取得します.
+     *
+     * @param state - ステート
+     * @returns ステートの従業員数
+     */
     getEmployeeCount(state) {
       return state.totalEmployeeCount;
     },
 
+    /**
+     * 従業員情報一覧を取得します.
+     *
+     * @param state - ステート
+     * @returns ステートの従業員情報一覧
+     */
     getEmployees(state) {
       return state.employees;
     },
@@ -74,14 +86,16 @@ export default new Vuex.Store({
      * @param id -受け取るID
      * @returns 従業員インスタンス
      */
-    getEmployeeById(state, id) {
-      for (const employee of state.employees) {
-        if (employee.id === id) {
-          return employee;
-        } else {
-          return "そのIDは存在しません";
+    getEmployeeById(state) {
+      return function(id: number) {
+        for (const employee of state.employees) {
+          if (employee.id === id) {
+            return employee;
+          } else {
+            throw new Error("そのIDは存在しません");
+          }
         }
-      }
+      };
     },
   }, // end getters
 

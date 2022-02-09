@@ -15,9 +15,9 @@ const routes: Array<RouteConfig> = [
     component: () => import("../views/aaa.vue"),
   },
   {
-    path: "/registerAdmin",
+    path: "/RegisterAdmin",
     name: "",
-    component: () => import("../views/registerAdmin.vue"),
+    component: () => import("../views/RegisterAdmin.vue"),
   },
 ];
 
