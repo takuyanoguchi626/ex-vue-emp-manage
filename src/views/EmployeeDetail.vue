@@ -15,12 +15,7 @@
               <tr>
                 <th nowrap>写真</th>
                 <td>
-                  <img
-                    :src="
-                      'http://153.127.48.168:8080/ex-emp-api/img/' +
-                        this.currentEmployee.image
-                    "
-                  />
+                  <img :src="currentEmployeeImage" />
                 </td>
               </tr>
               <tr>
@@ -80,7 +75,7 @@
                       id="dependentsCount"
                       type="text"
                       class="validate"
-                      :value="currentDependentsCount"
+                      v-model="currentDependentsCount"
                       required
                     />
                     <label for="dependentsCount2">扶養人数</label>
@@ -92,6 +87,7 @@
             <button
               class="btn btn-register waves-effect waves-light"
               type="button"
+              @click="update"
             >
               更新
             </button>
@@ -108,6 +104,7 @@ import axios from "axios";
 import { Employee } from "@/types/employee";
 @Component
 export default class XXXComponent extends Vue {
+  //従業員情報
   private currentEmployee = new Employee(
     0,
     "",
@@ -122,18 +119,42 @@ export default class XXXComponent extends Vue {
     "",
     0
   );
+  //従業員写真
   private currentEmployeeImage = "";
+  //扶養人数
   private currentDependentsCount = 0;
+  //エラーメッセージ
   private errorMessage = "";
-
+  /**
+   * Vuexストアのgetter経由で受け取ったリクエストパラメータのIDから1件の従業員情報を取得する.
+   */
   created(): void {
     const employeeId = Number(this.$route.params.id);
 
     this.currentEmployee = this.$store.getters.getEmployeeById(employeeId);
 
-    this.currentDependentsCount = this.$store.getters.getEmployeeById(
-      employeeId
-    ).dependentsCount;
+    this.currentEmployeeImage =
+      "http://153.127.48.168:8080/ex-emp-api/img/" + this.currentEmployee.image;
+
+    this.currentDependentsCount = this.currentEmployee.dependentsCount;
+  }
+  /**
+   * 扶養人数を更新する.
+   */
+  async update(): Promise<void> {
+    const response = await axios.post(
+      "http://153.127.48.168:8080/ex-emp-api/employee/update",
+      {
+        id: this.currentEmployee.id,
+        dependentsCount: this.currentDependentsCount,
+      }
+    );
+    const status = response.data.status;
+    if (status === "success") {
+      this.$router.push("/employeeList");
+    } else {
+      this.errorMessage = response.data.message;
+    }
   }
 }
 </script>
