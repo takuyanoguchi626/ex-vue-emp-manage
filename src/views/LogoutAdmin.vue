@@ -9,6 +9,9 @@ import { Component, Vue } from "vue-property-decorator";
 import axios from "axios";
 @Component
 export default class XXXComponent extends Vue {
+  /**
+   * ログアウトする
+   */
   async created(): Promise<void> {
     const response = await axios.get(
       "http://153.127.48.168:8080/ex-emp-api/logout"

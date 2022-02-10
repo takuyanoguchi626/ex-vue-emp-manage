@@ -14,6 +14,9 @@
                 v-model="lastName"
               />
               <label for="last_name">姓</label>
+              <span class="alert">
+                {{ alertLastName }}
+              </span>
             </div>
             <div class="input-field col s6">
               <input
@@ -24,6 +27,9 @@
                 v-model="firstName"
               />
               <label for="first_name">名</label>
+              <span class="alert">
+                {{ alertFirstName }}
+              </span>
             </div>
           </div>
           <div class="row">
@@ -36,6 +42,9 @@
                 v-model="mailAddress"
               />
               <label for="email">メールアドレス</label>
+              <span class="alert">
+                {{ alertEmail }}
+              </span>
             </div>
           </div>
           <div class="row">
@@ -49,6 +58,9 @@
                 v-model="password"
               />
               <label for="password">パスワード</label>
+              <span class="alert">
+                {{ alertPassword }}
+              </span>
             </div>
           </div>
           <div class="row">
@@ -84,6 +96,14 @@ export default class RegisterAdmin extends Vue {
   private mailAddress = "";
   //パスワード
   private password = "";
+  //入力値チェック（姓）
+  private alertLastName = "";
+  //入力値チェック（名）
+  private alertFirstName = "";
+  //入力値チェック（メールアドレス）
+  private alertEmail = "";
+  //入力値チェック（パスワード）
+  private alertPassword = "";
 
   /**
    * 管理者情報をWebAPIに送信し、登録するメソッド.
@@ -93,6 +113,31 @@ export default class RegisterAdmin extends Vue {
    * 入力した内容を送信し、正しければ登録、間違っていればエラーを表示する。
    */
   async registerAdmin(): Promise<void> {
+    this.alertLastName = "";
+    this.alertFirstName = "";
+    this.alertEmail = "";
+    this.alertPassword = "";
+    if (this.lastName === "") {
+      this.alertLastName = "姓が入力されていません";
+    }
+    if (this.firstName === "") {
+      this.alertFirstName = "名が入力されていません";
+    }
+    if (this.mailAddress === "") {
+      this.alertEmail = "メールアドレスが入力されていません";
+    }
+    if (this.password === "") {
+      this.alertPassword = "パスワードが入力されていません";
+    }
+    if (
+      this.alertLastName !== "" ||
+      this.alertFirstName !== "" ||
+      this.alertEmail !== "" ||
+      this.alertPassword !== ""
+    ) {
+      return;
+    }
+
     const response = await axios.post(
       "http://153.127.48.168:8080/ex-emp-api/insert",
       {
@@ -114,5 +159,9 @@ export default class RegisterAdmin extends Vue {
 <style scoped>
 .register-page {
   width: 600px;
+}
+
+.alert {
+  color: red;
 }
 </style>
