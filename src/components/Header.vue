@@ -9,6 +9,8 @@
         </div>
 
         <div class="header-right">
+          <router-link to="/employeeList">従業員一覧</router-link>
+
           <router-link to="/registerAdmin">管理者登録</router-link>
 
           <router-link to="/loginAdmin">

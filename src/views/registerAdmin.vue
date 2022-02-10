@@ -104,6 +104,8 @@ export default class RegisterAdmin extends Vue {
   private alertEmail = "";
   //入力値チェック（パスワード）
   private alertPassword = "";
+  //エラーチェック
+  private errorCheck = false;
 
   /**
    * 管理者情報をWebAPIに送信し、登録するメソッド.
@@ -117,24 +119,25 @@ export default class RegisterAdmin extends Vue {
     this.alertFirstName = "";
     this.alertEmail = "";
     this.alertPassword = "";
+    this.errorCheck = false;
+
     if (this.lastName === "") {
       this.alertLastName = "姓が入力されていません";
+      this.errorCheck = true;
     }
     if (this.firstName === "") {
       this.alertFirstName = "名が入力されていません";
+      this.errorCheck = true;
     }
     if (this.mailAddress === "") {
       this.alertEmail = "メールアドレスが入力されていません";
+      this.errorCheck = true;
     }
     if (this.password === "") {
       this.alertPassword = "パスワードが入力されていません";
+      this.errorCheck = true;
     }
-    if (
-      this.alertLastName !== "" ||
-      this.alertFirstName !== "" ||
-      this.alertEmail !== "" ||
-      this.alertPassword !== ""
-    ) {
+    if (this.errorCheck === true) {
       return;
     }
 

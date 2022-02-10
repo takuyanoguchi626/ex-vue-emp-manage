@@ -38,16 +38,26 @@ export default class XXXComponent extends Vue {
    * Vuexストアのアクション経由で非同期でWebAPIから従業員一覧を取得する.
    */
   created(): void {
-    this.$store.dispatch("getEmployeeList");
+    if (this.$store.getters.getLogin) {
+      this.$store.dispatch("getEmployeeList");
+    } else {
+      this.$router.push("/loginAdmin");
+    }
   }
+
   /**
    * 非同期で取得したVuexストア内の従業員数を取得し返す.
+   *
+   *@returns 従業員数
    */
   get employeeCount(): number {
     return this.$store.getters.getEmployeeCount;
   }
+
   /**
    * 非同期で取得したVuexストア内の従業員一覧を取得し返す.
+   *
+   *@returns 従業員一覧
    */
   get employees(): Array<Employee> {
     return this.$store.getters.getEmployees;

@@ -18,6 +18,7 @@ export default class XXXComponent extends Vue {
     );
     const status = response.data.status;
     if (status === "success") {
+      this.$store.commit("logout");
       this.$router.push("/loginAdmin");
     }
   }

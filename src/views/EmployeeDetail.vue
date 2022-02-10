@@ -75,7 +75,7 @@
                       id="dependentsCount"
                       type="text"
                       class="validate"
-                      v-model="currentDependentsCount"
+                      v-model.number="currentDependentsCount"
                       required
                     />
                     <label for="dependentsCount2">扶養人数</label>
@@ -125,6 +125,7 @@ export default class XXXComponent extends Vue {
   private currentDependentsCount = 0;
   //エラーメッセージ
   private errorMessage = "";
+
   /**
    * Vuexストアのgetter経由で受け取ったリクエストパラメータのIDから1件の従業員情報を取得する.
    */
@@ -138,10 +139,17 @@ export default class XXXComponent extends Vue {
 
     this.currentDependentsCount = this.currentEmployee.dependentsCount;
   }
+
   /**
    * 扶養人数を更新する.
+   *
    */
   async update(): Promise<void> {
+    if (typeof this.currentDependentsCount !== "number") {
+      this.errorMessage = "数字を入力してください";
+      return;
+    }
+
     const response = await axios.post(
       "http://153.127.48.168:8080/ex-emp-api/employee/update",
       {

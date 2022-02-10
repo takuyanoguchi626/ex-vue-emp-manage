@@ -12,6 +12,7 @@ export default new Vuex.Store({
     totalEmployeeCount: 0,
     //従業員一覧
     employees: Array<Employee>(),
+    login: false,
   }, // end state
 
   actions: {
@@ -58,6 +59,13 @@ export default new Vuex.Store({
         );
       }
     },
+    login(state) {
+      state.login = true;
+    },
+
+    logout(state) {
+      state.login = false;
+    },
   }, // end mutations
 
   getters: {
@@ -98,6 +106,9 @@ export default new Vuex.Store({
           }
         }
       };
+    },
+    getLogin(state) {
+      return state.login;
     },
   }, // end getters
 

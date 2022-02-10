@@ -81,6 +81,7 @@ export default class XXXComponent extends Vue {
     );
     const status = response.data.status;
     if (status === "success") {
+      this.$store.commit("login");
       this.$router.push("/employeeList");
     } else {
       this.errorMessage = response.data.message;
